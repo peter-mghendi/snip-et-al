@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "snip_table")
 public class Snip {
+
     @PrimaryKey(autoGenerate = true)
     private int id;
 
