@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         snipViewModel.getAllSnips().observe(this, new Observer<List<Snip>>() {
             @Override
             public void onChanged(List<Snip> snips) {
-                adapter.setSnips(snips);
+                adapter.submitList(snips);
             }
         });
 
