@@ -40,6 +40,10 @@ public class SnipAdapter extends RecyclerView.Adapter<SnipAdapter.SnipHolder> {
         notifyDataSetChanged();
     }
 
+    public Snip getSnipAt(int position) {
+        return snips.get(position);
+    }
+
     class SnipHolder extends RecyclerView.ViewHolder {
         private TextView textViewSubject;
         private TextView textViewContent;
