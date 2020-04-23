@@ -13,6 +13,7 @@ import java.util.List;
 
 public class SnipAdapter extends RecyclerView.Adapter<SnipAdapter.SnipHolder> {
     private List<Snip> snips = new ArrayList<>();
+    private OnItemClickListener listener;
 
     @NonNull
     @Override
@@ -54,6 +55,24 @@ public class SnipAdapter extends RecyclerView.Adapter<SnipAdapter.SnipHolder> {
             textViewSubject = itemView.findViewById(R.id.text_view_subject);
             textViewContent = itemView.findViewById(R.id.text_view_content);
             textViewPriority = itemView.findViewById(R.id.text_view_priority);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.OnItemClick(snips.get(position));
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void OnItemClick(Snip snip);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

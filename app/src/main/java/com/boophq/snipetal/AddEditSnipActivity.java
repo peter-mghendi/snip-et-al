@@ -12,7 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AddSnipActivity extends AppCompatActivity {
+public class AddEditSnipActivity extends AppCompatActivity {
+    public static final String EXTRA_ID =
+            "com.boophq.snipetal.EXTRA_ID";
     public static final String EXTRA_SUBJECT =
             "com.boophq.snipetal.EXTRA_SUBJECT";
     public static final String EXTRA_CONTENT =
@@ -37,7 +39,17 @@ public class AddSnipActivity extends AppCompatActivity {
         numberPickerPriority.setMaxValue(10);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Add Note");
+
+        Intent intent = getIntent();
+
+        if (intent.hasExtra(EXTRA_ID)) {
+            setTitle("Edit Note");
+            editTextSubject.setText(intent.getStringExtra(EXTRA_SUBJECT));
+            editTextContent.setText(intent.getStringExtra(EXTRA_CONTENT));
+            numberPickerPriority.setValue(intent.getIntExtra(EXTRA_ID, 1));
+        } else {
+            setTitle("Add Note");
+        }
     }
 
     private void saveNote() {
@@ -54,6 +66,11 @@ public class AddSnipActivity extends AppCompatActivity {
         data.putExtra(EXTRA_SUBJECT, subject);
         data.putExtra(EXTRA_CONTENT, content);
         data.putExtra(EXTRA_PRIORITY, priority);
+
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if (id != -1) {
+            data.putExtra(EXTRA_ID, id);
+        }
 
         setResult(RESULT_OK, data);
         finish();

@@ -22,7 +22,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    public static final int ADD_NOTE_REQUEST = 1;
+    public static final int ADD_SNIP_REQUEST = 1;
+    public static final int EDIT_SNIP_REQUEST = 2;
 
     private SnipViewModel snipViewModel;
 
@@ -35,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         buttonAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddSnipActivity.class);
-                startActivityForResult(intent, ADD_NOTE_REQUEST);
+                Intent intent = new Intent(MainActivity.this, AddEditSnipActivity.class);
+                startActivityForResult(intent, ADD_SNIP_REQUEST);
             }
         });
 
@@ -68,21 +69,50 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Snip deleted", Toast.LENGTH_SHORT).show();
             }
         }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClickListener(new SnipAdapter.OnItemClickListener() {
+            @Override
+            public void OnItemClick(Snip snip) {
+                Intent intent = new Intent(MainActivity.this, AddEditSnipActivity.class);
+                intent.putExtra(AddEditSnipActivity.EXTRA_ID, snip.getId());
+                intent.putExtra(AddEditSnipActivity.EXTRA_SUBJECT, snip.getSubject());
+                intent.putExtra(AddEditSnipActivity.EXTRA_CONTENT, snip.getContent());
+                intent.putExtra(AddEditSnipActivity.EXTRA_PRIORITY, snip.getPriority());
+                startActivityForResult(intent, EDIT_SNIP_REQUEST);
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
-            String subject = data.getStringExtra(AddSnipActivity.EXTRA_SUBJECT);
-            String content = data.getStringExtra(AddSnipActivity.EXTRA_CONTENT);
-            int priority = data.getIntExtra(AddSnipActivity.EXTRA_PRIORITY, 1);
+        if (requestCode == ADD_SNIP_REQUEST && resultCode == RESULT_OK) {
+            String subject = data.getStringExtra(AddEditSnipActivity.EXTRA_SUBJECT);
+            String content = data.getStringExtra(AddEditSnipActivity.EXTRA_CONTENT);
+            int priority = data.getIntExtra(AddEditSnipActivity.EXTRA_PRIORITY, 1);
 
             Snip snip = new Snip(subject, content, priority);
             snipViewModel.insert(snip);
 
             Toast.makeText(this, "Snip saved", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == EDIT_SNIP_REQUEST && resultCode == RESULT_OK) {
+            int id = data.getIntExtra(AddEditSnipActivity.EXTRA_ID, -1);
+
+            if (id == -1) {
+                Toast.makeText(this, "Note can't be updated", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String subject = data.getStringExtra(AddEditSnipActivity.EXTRA_SUBJECT);
+            String content = data.getStringExtra(AddEditSnipActivity.EXTRA_CONTENT);
+            int priority = data.getIntExtra(AddEditSnipActivity.EXTRA_PRIORITY, 1);
+
+            Snip snip = new Snip(subject, content, priority);
+            snip.setId(id);
+            snipViewModel.update(snip);
+
+            Toast.makeText(this, "Snip updated", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Snip not saved", Toast.LENGTH_SHORT).show();
         }
