@@ -10,16 +10,16 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Snip.class}, version = 1)
-public abstract class SnipDatabase extends RoomDatabase {
+public abstract class AppDatabase extends RoomDatabase {
 
-    private static SnipDatabase instance;
+    private static AppDatabase instance;
 
     public abstract SnipDao snipDao();
 
-    public static synchronized SnipDatabase getInstance(Context context) {
+    public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(), SnipDatabase.class,
-                    "snip_db")
+            instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class,
+                    "app_db")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
                     .build();
@@ -39,15 +39,16 @@ public abstract class SnipDatabase extends RoomDatabase {
     public static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private SnipDao snipDao;
 
-        private PopulateDbAsyncTask(SnipDatabase db) {
+        private PopulateDbAsyncTask(AppDatabase db) {
             snipDao = db.snipDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            snipDao.insert(new Snip("Subject 1", "Content 1", 1));
-            snipDao.insert(new Snip("Subject 2", "Content 2", 2));
-            snipDao.insert(new Snip("Subject 3", "Content 3", 3));
+            snipDao.insert(new Snip("Hello", "Welcome to Snip et al.", 1));
+            snipDao.insert(new Snip("Add a Snip", "Press the button at the bottom right to add a Snip.", 1));
+            snipDao.insert(new Snip("Edit a Snip", "Click on any Snip to edit it.", 1));
+            snipDao.insert(new Snip("Delete a Snip", "Swipe a Snip out in any direction to delete it", 1));
             return null;
         }
     }

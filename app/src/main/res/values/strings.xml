@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Snip et al</string>
+    <string name="str_subject">Subject</string>
+    <string name="str_content">Content</string>
+    <string name="str_priority">Priority:</string>
 </resources>

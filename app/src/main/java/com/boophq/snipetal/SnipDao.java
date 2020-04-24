@@ -21,9 +21,9 @@ public interface SnipDao {
     @Delete
     void delete(Snip snip);
 
-    @Query("DELETE FROM snip_table")
+    @Query("DELETE FROM snips")
     void deleteAllSnips();
 
-    @Query("SELECT * FROM snip_table ORDER BY priority DESC")
+    @Query("SELECT * FROM snips ORDER BY priority DESC")
     LiveData<List<Snip>> getAllSnips();
 }

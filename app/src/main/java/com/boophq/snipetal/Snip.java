@@ -3,7 +3,7 @@ package com.boophq.snipetal;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "snip_table")
+@Entity(tableName = "snips")
 public class Snip {
 
     @PrimaryKey(autoGenerate = true)

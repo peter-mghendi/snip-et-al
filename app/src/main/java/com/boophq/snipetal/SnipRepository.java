@@ -14,7 +14,7 @@ public class SnipRepository {
     private LiveData<List<Snip>> allSnips;
 
     public SnipRepository(Application application) {
-         SnipDatabase database = SnipDatabase.getInstance(application);
+         AppDatabase database = AppDatabase.getInstance(application);
          snipDao = database.snipDao();
          allSnips = snipDao.getAllSnips();
     }
@@ -76,7 +76,7 @@ public class SnipRepository {
 
         @Override
         protected Void doInBackground(Snip... snips) {
-            snipDao.insert(snips[0]);
+            snipDao.delete(snips[0]);
             return null;
         }
     }

@@ -12,20 +12,20 @@
         android:id="@+id/edit_text_subject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Subject"
+        android:hint="@string/str_subject"
         android:inputType="text"/>
 
     <EditText
         android:id="@+id/edit_text_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Content"
-        android:inputType="text"/>
+        android:hint="@string/str_content"
+        android:inputType="textMultiLine"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Priority:"
+        android:text="@string/str_priority"
         android:layout_marginTop="8dp"
         android:textAppearance="@android:style/TextAppearance.Medium" />
 

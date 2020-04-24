@@ -43,12 +43,12 @@ public class AddEditSnipActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent.hasExtra(EXTRA_ID)) {
-            setTitle("Edit Note");
+            setTitle("Edit Snip");
             editTextSubject.setText(intent.getStringExtra(EXTRA_SUBJECT));
             editTextContent.setText(intent.getStringExtra(EXTRA_CONTENT));
             numberPickerPriority.setValue(intent.getIntExtra(EXTRA_ID, 1));
         } else {
-            setTitle("Add Note");
+            setTitle("Add Snip");
         }
     }
 
@@ -57,8 +57,13 @@ public class AddEditSnipActivity extends AppCompatActivity {
         String content = editTextContent.getText().toString();
         int priority = numberPickerPriority.getValue();
 
-        if (subject.trim().isEmpty() || content.trim().isEmpty()) {
-            Toast.makeText(this, "Please insert as a subject and a content", Toast.LENGTH_SHORT).show();
+        if (subject.trim().isEmpty()) {
+            editTextSubject.requestFocus();
+            Toast.makeText(this, "Please insert a subject.", Toast.LENGTH_SHORT).show();
+            return;
+        } else if (content.trim().isEmpty()) {
+            editTextContent.requestFocus();
+            Toast.makeText(this, "Please insert content", Toast.LENGTH_SHORT).show();
             return;
         }
 

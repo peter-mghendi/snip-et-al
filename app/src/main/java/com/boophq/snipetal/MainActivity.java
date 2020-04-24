@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             int id = data.getIntExtra(AddEditSnipActivity.EXTRA_ID, -1);
 
             if (id == -1) {
-                Toast.makeText(this, "Note can't be updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Snip can't be updated", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.delete_all_snips:
                 snipViewModel.deleteAllSnips();
                 Toast.makeText(this, "All snips deleted", Toast.LENGTH_SHORT).show();
