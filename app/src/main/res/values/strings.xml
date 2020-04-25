@@ -3,4 +3,17 @@
     <string name="str_subject">Subject</string>
     <string name="str_content">Content</string>
     <string name="str_priority">Priority:</string>
+    <string name="str_pin_indicator_description">pin indicator</string>
+    <string name="str_pin_prompt">Enter your PIN:</string>
+    <string name="str_backspace_button_description">backspace button</string>
+    <string name="str_1">1</string>
+    <string name="str_2">2</string>
+    <string name="str_3">3</string>
+    <string name="str_4">4</string>
+    <string name="str_5">5</string>
+    <string name="str_6">6</string>
+    <string name="str_7">7</string>
+    <string name="str_8">8</string>
+    <string name="str_9">9</string>
+    <string name="str_0">0</string>
 </resources>
