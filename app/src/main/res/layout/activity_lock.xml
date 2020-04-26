@@ -1,254 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    android:orientation="vertical"
-    android:weightSum="3"
-    tools:context=".LockActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/str_pin_prompt"
-        android:textAppearance="@android:style/TextAppearance.Medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/view_pin" />
+    <data>
+        <variable
+            name="dotColor"
+            type="int" />
+        <variable
+            name="digitListSize"
+            type="int" />
+    </data>
 
-    <LinearLayout
-        android:id="@+id/view_pin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/view_keypad">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/str_pin_indicator_description"
-            app:srcCompat="@drawable/ic_circle_empty" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/str_pin_indicator_description"
-            app:srcCompat="@drawable/ic_circle_empty" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/str_pin_indicator_description"
-            app:srcCompat="@drawable/ic_circle_empty" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="@string/str_pin_indicator_description"
-            app:srcCompat="@drawable/ic_circle_empty" />
-    </LinearLayout>
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="#00000000"
-        android:onClick="onBackspaceClicked"
-        android:src="@drawable/ic_backspace"
-        android:contentDescription="@string/str_backspace_button_description"
-        app:layout_constraintBottom_toTopOf="@id/view_keypad"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/view_pin"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/view_keypad"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:padding="16dp"
+        android:weightSum="3"
+        tools:context=".LockActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_pin_prompt"
+            android:textAppearance="@android:style/TextAppearance.Medium"
+            app:layout_constraintBottom_toTopOf="@id/view_pin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:id="@+id/view_pin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@id/view_keypad"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/str_pin_indicator_description"
+                android:src="@{digitListSize > 0 ? @drawable/ic_circle_filled : @drawable/ic_circle_empty}"
+                android:tint="@{dotColor}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/str_pin_indicator_description"
+                android:src="@{digitListSize > 1 ? @drawable/ic_circle_filled : @drawable/ic_circle_empty}"
+                android:tint="@{dotColor}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/str_pin_indicator_description"
+                android:src="@{digitListSize > 2 ? @drawable/ic_circle_filled : @drawable/ic_circle_empty}"
+                android:tint="@{dotColor}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/str_pin_indicator_description"
+                android:src="@{digitListSize > 3 ? @drawable/ic_circle_filled : @drawable/ic_circle_empty}"
+                android:tint="@{dotColor}" />
+        </LinearLayout>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:contentDescription="@string/str_backspace_button_description"
+            android:onClick="onBackspaceClicked"
+            android:padding="16dp"
+            android:src="@drawable/ic_backspace"
+            app:layout_constraintBottom_toTopOf="@id/view_keypad"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/view_pin"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/view_keypad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            style="?android:attr/buttonBarStyle">
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00000000"
-                android:onClick="onDigitClicked"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/str_1"/>
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00000000"
-                android:onClick="onDigitClicked"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/str_2"/>
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00000000"
+                    android:onClick="onDigitClicked"
+                    android:text="@string/str_1"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/colorAccent"
+                    android:enabled="@{digitListSize &lt; 4}"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00000000"
-                android:onClick="onDigitClicked"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/str_3"/>
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00000000"
+                    android:onClick="onDigitClicked"
+                    android:text="@string/str_2"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/colorAccent"
+                    android:enabled="@{digitListSize &lt; 4}" />
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00000000"
+                    android:onClick="onDigitClicked"
+                    android:text="@string/str_3"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/colorAccent"
+                    android:enabled="@{digitListSize &lt; 4}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00000000"
+                    android:enabled="@{digitListSize &lt; 4}"
+                    android:onClick="onDigitClicked"
+                    android:text="@string/str_4"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/colorAccent" />
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00000000"
+                    android:enabled="@{digitListSize &lt; 4}"
+                    android:onClick="onDigitClicked"
+                    android:text="@string/str_5"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/colorAccent" />
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00000000"
+                    android:enabled="@{digitListSize &lt; 4}"
+                    android:onClick="onDigitClicked"
+                    android:text="@string/str_6"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/colorAccent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00000000"
+                    android:onClick="onDigitClicked"
+                    android:text="@string/str_7"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/colorAccent"
+                    android:enabled="@{digitListSize &lt; 4}"/>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00000000"
+                    android:onClick="onDigitClicked"
+                    android:text="@string/str_8"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/colorAccent"
+                    android:enabled="@{digitListSize &lt; 4}" />
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00000000"
+                    android:onClick="onDigitClicked"
+                    android:text="@string/str_9"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/colorAccent"
+                    android:enabled="@{digitListSize &lt; 4}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp">
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00000000"
+                    android:onClick="onDigitClicked"
+                    android:text="@string/str_0"
+                    android:textAppearance="@android:style/TextAppearance.Large"
+                    android:textColor="@color/colorAccent"
+                    android:enabled="@{digitListSize &lt; 4}" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            style="?android:attr/buttonBarStyle">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00000000"
-                android:onClick="onDigitClicked"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/str_4"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00000000"
-                android:onClick="onDigitClicked"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/str_5" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00000000"
-                android:onClick="onDigitClicked"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/str_6" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            style="?android:attr/buttonBarStyle">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00000000"
-                android:onClick="onDigitClicked"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/str_7" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00000000"
-                android:onClick="onDigitClicked"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/str_8" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00000000"
-                android:onClick="onDigitClicked"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/str_9" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal"
-            style="?android:attr/buttonBarStyle">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="#00000000"
-                android:onClick="onDigitClicked"
-                android:textColor="@color/colorAccent"
-                android:textAppearance="@android:style/TextAppearance.Large"
-                style="?android:attr/buttonBarButtonStyle"
-                android:text="@string/str_0" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

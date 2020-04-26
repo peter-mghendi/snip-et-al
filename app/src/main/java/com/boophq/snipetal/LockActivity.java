@@ -1,51 +1,70 @@
 package com.boophq.snipetal;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.Observable;
+import androidx.databinding.ObservableField;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.boophq.snipetal.databinding.ActivityLockBinding;
 
 public class LockActivity extends AppCompatActivity {
     private static final int DELAY = 500;
-    public List<String> digitList = new ArrayList<>(4);
+    private ActivityLockBinding binding;
+    ObservableField<String> pin = new ObservableField<>("");
+    private int dotColor = Color.parseColor("#212121"),
+            green = Color.parseColor("#4CAF50"),
+            red = Color.parseColor("#F44336");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lock);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_lock);
+
+        binding.setDotColor(dotColor);
+        binding.setDigitListSize(pin.get().length());
+
+        pin.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                binding.setDigitListSize(pin.get().length());
+                if (pin.get().length() == 4) validate();
+            }
+        });
     }
 
-    // TODO Bind array to dots, bind dot color to var, observe array
     private void validate() {
-        final boolean valid = digitList.toString().equals("1234");
-
-        // TODO turn dots green/red
+        // TODO Handle hashing, compare hashes
+        final boolean valid = pin.get().equals("1234");
+        binding.setDotColor(valid ? green : red);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                binding.setDotColor(dotColor);
+                pin.set("");
+
                 if (valid) {
                     startActivity(new Intent(LockActivity.this, MainActivity.class));
                     finish();
                 }
-
-                // TODO Clear array, reset dot color
             }
         }, DELAY);
     }
 
     public void onDigitClicked(View view) {
-        if (digitList.size() < 4) digitList.add(((Button) view).getText().toString()); // TODO Bind disabled state
-        if (digitList.size() == 4) validate();
+        pin.set(pin.get() + ((Button) view).getText());
     }
 
     public void onBackspaceClicked(View view) {
-        if (!digitList.isEmpty()) digitList.remove(digitList.size() - 1); // TODO Bind disabled state
+        String currentPin = pin.get();
+        if (currentPin.length() > 0)
+            pin.set(new StringBuilder(currentPin).deleteCharAt(currentPin.length() - 1).toString());
     }
 }
